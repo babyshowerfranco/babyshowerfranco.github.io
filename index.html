@@ -728,7 +728,11 @@ $('#cats').addEventListener('click', e => {
 
 /* — lista — */
 function renderGifts(){
-  const lista = REGALOS.filter(r => catActiva === "Todos" || r.c === catActiva);
+  const lista = REGALOS.filter(r => catActiva === "Todos" || r.c === catActiva)
+    /* Disponibles arriba, separados al final (solo en la página; la hoja de
+       Drive mantiene su orden). El sort es estable: dentro de cada grupo se
+       conserva el orden de la hoja. */
+    .sort((a, b) => (a.s >= a.t ? 1 : 0) - (b.s >= b.t ? 1 : 0));
   $('#gifts').innerHTML = lista.map(r => {
     const libres = r.t - r.s;
     const tomado = libres <= 0;
