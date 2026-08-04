@@ -580,8 +580,8 @@ const MAPS_URL  = "https://www.google.com/maps/search/?api=1&query=" + encodeURI
 /* ═══════════════ LISTA DE REGALOS ═══════════════
    La FUENTE ÚNICA es la hoja de Google (Drive): la página descarga de ahí
    nombres, categorías, links y cupos al abrir, cada minuto y al volver a la
-   pestaña. Esta copia local (Bebé Oso.xlsx · 9-jul-2026) solo se usa como
-   respaldo si no hay conexión con el Apps Script.
+   pestaña. Esta copia local (espejo de la hoja de Drive · 4-ago-2026) solo se
+   usa como respaldo si no hay conexión con el Apps Script.
    t = cuántas veces puede separarse (ej. pañales) · s = veces ya separado */
 const REGALOS = [
   {id:1,  n:"SET BIBERONES",                                        c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/21090137/set-natural-3-0-biberon-125ml-biberon-260ml-afv125ml-afv260ml-cepillo-chupon/21090137", t:1, s:1},
@@ -591,10 +591,10 @@ const REGALOS = [
   {id:5,  n:"CHUPON AVENT",                                         c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/149467547/chupon-avent-0-6m-ultra-aereado-x-2-uni-estuche-nino/149467548", t:1, s:0},
   {id:6,  n:"PACK CUIDADO EUCERIN",                                 c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/prod17470139/Pack-Cuidado-para-Bebe-Eucerin/sku17830007", t:1, s:1},
   {id:7,  n:"BODY LOTION ISDIN",                                    c:"Aseo",         u:"https://www.falabella.com.pe/falabella-pe/product/18135675/isdin-babynaturals-body-lotion-400ml-locion-corporal-hidratante-para-la-piel-del-bebe/18135675", t:1, s:1},
-  {id:8,  n:"REDUCTOR DE INODORO CON ESCALERA",                     c:"Aseo",         u:"https://www.carestino.com.pe/producto/reductor-de-inodoro-con-escalera-pekin-v2-gris/", t:1, s:0},
-  {id:9,  n:"CAMA MONTESSORI",                                      c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/142638094/CAMA-MONTESSORI-EVOLUTIVA-DESARMABLE-1.5-PLZ/142638095", t:1, s:0},
-  {id:38, n:"COLCHON PARA CAMA MONTESSORI 1.5 PLAZAS",              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/13892160/colchon-royal-prince-firme-1-5-plz-1-almohada-protector/13892160", t:1, s:0},
-  {id:39, n:"FUNDA DE COLCHON IMPERMEABLE 1.5 PLAZAS",              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/145935110/Funda-De-Colchon-Impermeable-Hypno-de-Bambu-Con-Cierre-Bl/145935118", t:1, s:0},
+  {id:8,  n:"REDUCTOR DE INODORO CON ESCALERA",                     c:"Aseo",         u:"https://www.carestino.com.pe/producto/reductor-de-inodoro-con-escalera-pekin-v2-gris/", t:1, s:1},
+  {id:9,  n:"CAMA MONTESSORI",                                      c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/142638094/CAMA-MONTESSORI-EVOLUTIVA-DESARMABLE-1.5-PLZ/142638095", t:1, s:1},
+  {id:38, n:"COLCHON PARA CAMA MONTESSORI 1.5 PLAZAS",              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/13892160/colchon-royal-prince-firme-1-5-plz-1-almohada-protector/13892160", t:1, s:1},
+  {id:39, n:"FUNDA DE COLCHON IMPERMEABLE 1.5 PLAZAS",              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/145935110/Funda-De-Colchon-Impermeable-Hypno-de-Bambu-Con-Cierre-Bl/145935118", t:1, s:1},
   {id:10, n:"CUNA CORRAL",                                          c:"Cuarto",       u:"", t:1, s:1},
   {id:11, n:"COLCHON PARA CUNA CORRAL",                             c:"Cuarto",       u:"", t:1, s:1},
   {id:12, n:"EDREDON PARA CUNA CORRAL",                             c:"Cuarto",       u:"https://www.carestino.com.pe/producto/edredon-para-cuna-corral-de-70x104cm-blanco/", t:1, s:0},
@@ -603,11 +603,11 @@ const REGALOS = [
   {id:14, n:"MECEDORA ELECTRICA DE BEBE",                           c:"Cuarto",       u:"", t:1, s:1},
   {id:15, n:"CREMA LANOLINA 40GR LANSINOH",                         c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/120796092/Crema-Lanolina-40gr-Lansinoh/120796094", t:2, s:0},
   {id:16, n:"COCHE DE PASEO",                                       c:"Paseo",        u:"", t:1, s:1},
-  {id:17, n:"CANGURO PORTA BEBE",                                   c:"Paseo",        u:"https://www.carestino.com.pe/producto/canguro-porta-bebe-basic-grafito/", t:1, s:0},
-  {id:18, n:"COMBO MOSQUITERO CON COBERTOR DE LLUVIA CARESTINO",    c:"Paseo",        u:"https://www.carestino.com.pe/producto/combo-mosquitero-cobertor-de-lluvia/", t:1, s:0},
-  {id:19, n:"SILLA DE AUTO MONZA",                                  c:"Paseo",        u:"https://www.carestino.com.pe/producto/silla-de-auto-booster-monza-negro/", t:1, s:0},
-  {id:20, n:"BATA OSO 2-4 AÑOS",                                    c:"Ropa",         u:"https://www.carestino.com.pe/producto/bata-oso-2-4-anios-gris/", t:1, s:0},
-  {id:21, n:"ESTERILIZADOR DE BIBERONES",                           c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/126491583/CALENTADOR-DE-BIBERONES-4-EN-1-PREMIUM-Y-ESTERILIZADOR/126491586", t:1, s:0},
+  {id:17, n:"CANGURO PORTA BEBE",                                   c:"Paseo",        u:"https://www.carestino.com.pe/producto/canguro-porta-bebe-basic-grafito/", t:1, s:1},
+  {id:18, n:"COMBO MOSQUITERO CON COBERTOR DE LLUVIA CARESTINO",    c:"Paseo",        u:"https://www.carestino.com.pe/producto/combo-mosquitero-cobertor-de-lluvia/", t:1, s:1},
+  {id:19, n:"SILLA DE AUTO MONZA",                                  c:"Paseo",        u:"https://www.carestino.com.pe/producto/silla-de-auto-booster-monza-negro/", t:1, s:1},
+  {id:20, n:"BATA OSO 2-4 AÑOS",                                    c:"Ropa",         u:"https://www.carestino.com.pe/producto/bata-oso-2-4-anios-gris/", t:1, s:1},
+  {id:21, n:"ESTERILIZADOR DE BIBERONES",                           c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/126491583/CALENTADOR-DE-BIBERONES-4-EN-1-PREMIUM-Y-ESTERILIZADOR/126491586", t:1, s:1},
   {id:22, n:"COJIN DE LACTANCIA",                                   c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/128116235/Cojin-de-Lactancia-Con-Funda-Premium-Grafito/128116236", t:1, s:1},
   {id:23, n:"MEDIA DE CONTROL DE MONITOREO DE FRECUENCIA CARDIACA", c:"Cuidado",      u:"https://shop.sense-u.com/en-saf/products/sense-u-smart-sock-shoe", t:1, s:0},
   {id:24, n:"KIT DE MANICURA",                                      c:"Cuidado",      u:"", t:1, s:1},
@@ -615,21 +615,22 @@ const REGALOS = [
   {id:26, n:"EXTRACTOR DE LECHE ELECTRICO",                         c:"Mamá",         u:"https://www.falabella.com.pe/falabella-pe/product/20704098/extractor-portatil-m9-doble-succion/20704098", t:1, s:0},
   {id:27, n:"HUMIDIFICADOR SMART",                                  c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/154851043/humidificador-xiaomi-smart-humidifier-2-uv-c-4-5l-350ml-h-32db-difusor-aromas-wifi-mi-home/154851044", t:1, s:0},
   {id:28, n:"CAMARA C500 DUAL XIAOMI",                              c:"Cuarto",       u:"https://www.falabella.com.pe/falabella-pe/product/148950136/camara-xiaomi-c500-dual-4mp-2lentes-deteccion-ia-llanto-bebe-audio-bidireccional/148950137", t:1, s:1},
-  {id:29, n:"GIMNASIO DIDACTICO CARESTINO",                         c:"Cuarto",       u:"https://www.carestino.com.pe/producto/gimnasio-didactico-carestino-gatito/", t:1, s:0},
-  {id:30, n:"BOLSA DE DORMIR OSITO",                                c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/147116907/Bolsa-de-Dormir-Osito-de-Felpa-Gris-para-Bebe/147116908", t:1, s:0},
-  {id:31, n:"SABANAS PARA CUNA",                                    c:"Cuarto",       u:"https://www.carestino.com.pe/producto/sabanas-300-hilos-para-cuna-corral-de-70x104cm-blanco/", t:2, s:0},
-  {id:32, n:"PROTECTOR IMPERMEABLE PARA COLCHON",                   c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", t:2, s:0},
+  {id:29, n:"GIMNASIO DIDACTICO CARESTINO",                         c:"Cuarto",       u:"https://www.carestino.com.pe/producto/gimnasio-didactico-carestino-gatito/", t:1, s:1},
+  {id:30, n:"BOLSA DE DORMIR OSITO",                                c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/147116907/Bolsa-de-Dormir-Osito-de-Felpa-Gris-para-Bebe/147116908", t:1, s:1},
+  {id:31, n:"SABANAS PARA CUNA",                                    c:"Cuarto",       u:"https://www.carestino.com.pe/producto/sabanas-300-hilos-para-cuna-corral-de-70x104cm-blanco/", t:2, s:2},
+  {id:32, n:"PROTECTOR IMPERMEABLE PARA COLCHON",                   c:"Cuarto",       u:"https://www.carestino.com.pe/producto/protector-impermeable-para-cuna-corral-de-70x104cm-blanco/", t:1, s:1},
   {id:33, n:"MANTA SHERPA",                                         c:"Cuarto",       u:"https://www.sodimac.com.pe/sodimac-pe/articulo/155133463/manta-premium-de-sherpa-para-bebes-y-ninos-suavidad-y-abrigo-excepcional-frazada/155133464", t:1, s:1},
   {id:34, n:"SET DE ALIMENTACION DE SILICONA",                      c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/153401695/set-de-alimentacion-para-bebe-de-silicona-antideslizante-9-piezas-verde-libre-de-bpa/153401696", t:1, s:0},
-  {id:35, n:"PAÑALES HUGGIES NATURAL CARE TALLA P",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panal-huggies-unisex-talla-p-natural-care/010472", t:4, s:1},
+  {id:35, n:"PAÑALES HUGGIES DERMACARE TALLA P",                    c:"Cuidado",      u:"https://www.metro.pe/pa-ales-huggies-dermacare-talla-p-68un-1016311/p?idsku=39281938", t:4, s:1},
   {id:36, n:"PAÑALES HUGGIES NATURAL CARE TALLA M",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panales-huggies-natural-care-m-60un/011390", t:10, s:0},
   {id:37, n:"PAÑALES HUGGIES NATURAL CARE TALLA G",                 c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/panales-huggies-g-bigpack-natural-care-bolsa-66-un/036335", t:8, s:0},
-  {id:41, n:"PACK TOALLAS HUMEDAS + CICAPLAST BAUME B5",            c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/pack-toallas-humedas-huggies-crema-cicaplast-baume/PACKDB810", t:3, s:0},
-  {id:42, n:"EXTRACTOR MANUAL DE LECHE",                            c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/16974146/extractor-manual-de-leche-240ml-nuby/16974146", t:1, s:0},
+  {id:41, n:"PACK TOALLAS HUMEDAS + CICAPLAST BAUME B5",            c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/pack-toallas-humedas-huggies-crema-cicaplast-baume/PACKDB810", t:3, s:2},
+  {id:42, n:"EXTRACTOR MANUAL DE LECHE",                            c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/16974146/extractor-manual-de-leche-240ml-nuby/16974146", t:1, s:1},
   {id:43, n:"TOALLAS HUMEDAS",                                      c:"Cuidado",      u:"https://www.mifarma.com.pe/producto/toalla-humeda-babysec-super-premium-99-agua/078910", t:10, s:0},
-  {id:44, n:"MOCHILA PAÑALERA",                                     c:"Paseo",        u:"https://www.carestino.com.pe/producto/mochila-panialera-boston-negro-melange/", t:1, s:0},
+  {id:44, n:"MOCHILA PAÑALERA",                                     c:"Paseo",        u:"https://www.carestino.com.pe/producto/mochila-panialera-boston-negro-melange/", t:1, s:1},
   {id:45, n:"COOLER BAG DE LACTANCIA",                              c:"Alimentación", u:"https://www.falabella.com.pe/falabella-pe/product/152937271/cooler-bag-de-lactancia-conservador-de-leche-materna-incluye-2-bloques-de-hielo-con-gel/152937272", t:1, s:0},
-  {id:46, n:"EXTRACTOR NASAL",                                      c:"Cuidado",      u:"https://www.falabella.com.pe/falabella-pe/product/80070854/aspirador-nasal-electrico-momcozy/80070854", t:1, s:0},
+  {id:46, n:"COJIN ANTIREFLUJO",                                    c:"Cuarto",       u:"https://www.maternelle.pe/collections/ofertas/products/cojin-antireflujo-maternelle-celeste-pinguino-full-soporte-firme-y-comodo-al-bebe", t:1, s:0},
+  {id:47, n:"ARNES CAMINADOR",                                      c:"Paseo",        u:"https://www.maternelle.pe/collections/ofertas/products/arnes-y-caminador-2-en-1-verde", t:1, s:0},
 ];
 
 /* Copia de los links locales: si la hoja de Drive aún no tiene columna LINK,
